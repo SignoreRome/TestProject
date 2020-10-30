@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Main {
 
@@ -72,6 +73,39 @@ public class Main {
 
         arr5 = Arrays.stream(arr5).filter(a -> a % 2 != 0).map(a -> a * 2).toArray();
         System.out.println(Arrays.toString(arr5));
+
+        System.out.println(list4.add(4));
+
+        Map<Integer,String> hash = new HashMap<>();
+        hash.put(1,"горелые");
+        hash.put(2, "золотые");
+
+        for (Map.Entry<Integer, String> entry : hash.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+
+        hash.forEach((k,v) -> System.out.println(k+" "+v));
+
+        /*hash = hash.entrySet().stream()
+                .filter(k -> k.getKey() == 1)
+//                .forEach(k -> k.setValue("Молодцы"))
+                .map(e ->e.setValue("great"))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));*/
+
+        hash.forEach((k,v) -> System.out.println(k+" "+v));
+
+        List<Integer> numbers = Arrays.asList(1,5,7,8,9);
+
+        numbers.stream().filter(x -> x > 3).map(x -> x *2).forEach(x -> System.out.print(x+" "));
+
+        System.out.println();
+
+        IntStream.of(50, 60, 70, 80, 90, 100, 110, 120).filter(x -> x < 90).map(x -> x + 10)
+                .limit(3).forEach(System.out::print);
+
+
+
+
 
     }
 
