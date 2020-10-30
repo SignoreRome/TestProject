@@ -96,12 +96,31 @@ public class Main {
 
         List<Integer> numbers = Arrays.asList(1,5,7,8,9);
 
-        numbers.stream().filter(x -> x > 3).map(x -> x *2).forEach(x -> System.out.print(x+" "));
+        numbers.stream()
+                .filter(x -> x > 3)
+                .map(x -> x *2)
+                .forEach(x -> System.out.print(x+" "));
 
         System.out.println();
 
-        IntStream.of(50, 60, 70, 80, 90, 100, 110, 120).filter(x -> x < 90).map(x -> x + 10)
+        IntStream.of(50, 60, 70, 80, 90, 100, 110, 120)
+                .filter(x -> x < 90)
+                .map(x -> x + 10)
                 .limit(3).forEach(System.out::print);
+
+        System.out.println();
+
+        List<Human> humans = Arrays.asList(
+                new Human("Sam", Arrays.asList("Buddy", "Lucy")),
+                new Human("Bob", Arrays.asList("Frankie", "Rosie")),
+                new Human("Marta", Arrays.asList("Simba", "Tilly")));
+
+        List<String> petsName = humans.stream()
+                .map(human -> human.getPets())
+                .flatMap(pets ->pets.stream())
+                .collect(Collectors.toList());
+
+        System.out.println(petsName);
 
 
 
