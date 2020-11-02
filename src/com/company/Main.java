@@ -3,10 +3,29 @@ package com.company;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+
+        List<Integer> listIter = Arrays.asList(1, 7, 9, 7, 5, 3, 2, 17, 58, 5);
+        Iterator<Integer> iterator = listIter.iterator();
+        while (iterator.hasNext()) {
+            System.out.print(iterator.next() + " ");
+        }
+
+        listIter = listIter.stream()
+                .filter(x -> x > 4)
+                .map(x -> x + 2)
+                .distinct()
+                .sorted((i1,i2) -> i2-i1)
+                .collect(Collectors.toList());
+
+        System.out.print(listIter);
+
+        System.out.println();
+
         System.out.println("First step");
         Cat tom = new Cat(1, "Tom");
         Dog psina = new Dog(2, "Psina");
@@ -19,15 +38,26 @@ public class Main {
         list.sort((s1, s2) -> s2.length() - s1.length());
         System.out.println(list);
 
+
         /** map method **/
         int[] arr1 = new int[10];
         List<Integer> list1 = new ArrayList<>();
         fillArr(arr1);
         fillList(list1);
 
-        arr1 = Arrays.stream(arr1).map(a -> a * 2).toArray();
-        list1 = list1.stream().map(a -> a * 2).collect(Collectors.toList());
-        arr1 = Arrays.stream(arr1).map(a -> 3).toArray();
+        arr1 = Arrays.stream(arr1)
+                .map(a -> a * 2).toArray();
+        list1 = list1.stream().map(a -> a * 2)
+                .collect(Collectors.toList());
+        arr1 = Arrays.stream(arr1)
+                .map(a -> 3).toArray();
+
+        list1.add(5);
+        list1.addAll(Arrays.asList(4, 5, 7, 8, 9, 77, 87, -3));
+        Collections.sort(list1, (i1, i2) -> i2 - i1);
+
+        //list1.sort((i1,i2) -> i2-i1);
+
 
         System.out.println(list1);
         System.out.println(Arrays.toString(arr1));
@@ -76,15 +106,15 @@ public class Main {
 
         System.out.println(list4.add(4));
 
-        Map<Integer,String> hash = new HashMap<>();
-        hash.put(1,"горелые");
+        Map<Integer, String> hash = new HashMap<>();
+        hash.put(1, "горелые");
         hash.put(2, "золотые");
 
         for (Map.Entry<Integer, String> entry : hash.entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
 
-        hash.forEach((k,v) -> System.out.println(k+" "+v));
+        hash.forEach((k, v) -> System.out.println(k + " " + v));
 
         /*hash = hash.entrySet().stream()
                 .filter(k -> k.getKey() == 1)
@@ -92,14 +122,14 @@ public class Main {
                 .map(e ->e.setValue("great"))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));*/
 
-        hash.forEach((k,v) -> System.out.println(k+" "+v));
+        hash.forEach((k, v) -> System.out.println(k + " " + v));
 
-        List<Integer> numbers = Arrays.asList(1,5,7,8,9);
+        List<Integer> numbers = Arrays.asList(1, 5, 7, 8, 9);
 
         numbers.stream()
                 .filter(x -> x > 3)
-                .map(x -> x *2)
-                .forEach(x -> System.out.print(x+" "));
+                .map(x -> x * 2)
+                .forEach(x -> System.out.print(x + " "));
 
         System.out.println();
 
@@ -116,14 +146,16 @@ public class Main {
                 new Human("Marta", Arrays.asList("Simba", "Tilly")));
 
         List<String> petsName = humans.stream()
-                .map(human -> human.getPets())
-                .flatMap(pets ->pets.stream())
+                .flatMap(human -> human.getPets().stream())
                 .collect(Collectors.toList());
 
-        System.out.println(petsName);
-
-
-
+        Map<Integer, String> hashMap = new HashMap<>();
+        hashMap.put(1, "One");
+        hashMap.put(2, "Two");
+        hashMap.put(3, "Three");
+        for (Map.Entry<Integer, String> entry : hashMap.entrySet()) {
+            if (entry.getKey() == 3) entry.setValue("");
+        }
 
 
     }
@@ -143,5 +175,11 @@ public class Main {
 
     private static void accept(int a) {
         System.out.print(a + " ");
+    }
+
+    private static void fillTestList(List<Integer> integerList) {
+        for (int i = 0; i < 1000000; i++) {
+            integerList.add(i);
+        }
     }
 }
